@@ -13,9 +13,7 @@ export default function Header() {
       const userInfo = response.data;
       setUserInfo(userInfo);
     })
-    .catch(e => {
-      console.log(e)
-    })
+    
   }, []);
 
   async function logout() {
