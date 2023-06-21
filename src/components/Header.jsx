@@ -16,7 +16,7 @@ export default function Header() {
     .catch(e => {
       console.log(e)
     })
-  }, );
+  }, []);
 
   async function logout() {
     const response = await axios.post("/auth/logout");
@@ -35,7 +35,7 @@ export default function Header() {
         {username && (
           <>
             <Link to="/create">Create new Blog</Link>
-            <p onClick={logout}>Logout ({username})</p>
+            <a onClick={logout}>Logout ({username})</a>
           </>
         )}
         {!username && (

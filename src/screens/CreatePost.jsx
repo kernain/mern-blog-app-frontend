@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ReactQuill from "react-quill";
-import 'react-quill/dist/quill.snow.css';
+import "react-quill/dist/quill.snow.css";
 import Editor from "../components/Editor";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -15,20 +15,22 @@ const CreatePost = () => {
   const navigate = useNavigate();
 
   async function createNewPost(ev) {
-    const data = new FormData();
-    data.set('title', title);
-    data.set('summary', summary);
-    data.set('content', content);
-    data.set('file', files[0]);
     ev.preventDefault();
-    const response = await axios.post('/post/create', data);
-    if (response.status == 200) {
-      toast.success(response.data.message)
-      navigate("/")
-    }
+    if (title && summary && files && content) {
+      const data = new FormData();
+      data.set("title", title);
+      data.set("summary", summary);
+      data.set("content", content);
+      data.set("file", files[0]);
+      
+      const response = await axios.post("/post/create", data);
+      if (response.status == 200) {
+        toast.success(response.data.message);
+        navigate("/");
+      }
+    } else toast.error("Please Fill the Required Fields!");
   }
 
-  
   return (
     <form onSubmit={createNewPost}>
       <input
@@ -46,7 +48,9 @@ const CreatePost = () => {
       <input type="file" onChange={(ev) => setFiles(ev.target.files)} />
       {/* <ReactQuill/> */}
       <Editor value={content} onChange={setContent} />
-      <button className="button" style={{ marginTop: "5px" }}>Create post</button>
+      <button className="button" style={{ marginTop: "5px" }}>
+        Create post
+      </button>
     </form>
   );
 };
